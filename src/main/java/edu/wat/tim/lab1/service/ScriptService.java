@@ -1,6 +1,8 @@
 package edu.wat.tim.lab1.service;
 
 
+import edu.wat.tim.lab1.model.KlientEntity;
+import edu.wat.tim.lab1.model.ProduktEntity;
 import edu.wat.tim.lab1.repository.KlientEntityRepository;
 import edu.wat.tim.lab1.repository.KoszykEntityRepository;
 import edu.wat.tim.lab1.repository.ListaKoszykaRepository;
@@ -10,23 +12,19 @@ import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.PolyglotException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import edu.wat.tim.lab1.model.ListaKoszykaEntity;
-import edu.wat.tim.lab1.repository.ProduktEntityRepository;
-import edu.wat.tim.lab1.repository.KlientEntityRepository;
-import edu.wat.tim.lab1.repository.KoszykEntityRepository;
-import edu.wat.tim.lab1.repository.ListaKoszykaRepository;
-import edu.wat.tim.lab1.service.SampleService;
+
+import java.util.List;
 
 @Service
 @Slf4j
-public class ServiceScript {
+public class ScriptService {
     private final KlientEntityRepository klientEntityRepository;
     private final KoszykEntityRepository koszykEntityRepository;
     private final ProduktEntityRepository produktEntityRepository;
     private final ListaKoszykaRepository listaKoszykaRepository;
 
     @Autowired
-    public ServiceScript(KlientEntityRepository klientEntityRepository, KoszykEntityRepository koszykEntityRepository, ProduktEntityRepository produktEntityRepository, ListaKoszykaRepository listaKoszykaRepository) {
+    public ScriptService(KlientEntityRepository klientEntityRepository, KoszykEntityRepository koszykEntityRepository, ProduktEntityRepository produktEntityRepository, ListaKoszykaRepository listaKoszykaRepository) {
         this.klientEntityRepository = klientEntityRepository;
         this.koszykEntityRepository = koszykEntityRepository;
         this.produktEntityRepository = produktEntityRepository;
@@ -47,5 +45,14 @@ public class ServiceScript {
             log.error("Error executing", e);
             return e.getMessage() + "\n" + e.getSourceLocation().toString();
         }
+
     }
+
+    public void addKlienci(List<KlientEntity> klienci) {
+        klientEntityRepository.saveAll(klienci);
+    }
+    public void addProdukt (List<ProduktEntity> produkty) {
+        produktEntityRepository.saveAll(produkty);
+    }
+
 }
